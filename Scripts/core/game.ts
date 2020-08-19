@@ -10,6 +10,15 @@ let Game = (function(){
     let rollButton: UIObjects.Button;  
     let leftDice:Core.GameObject;  
     let rightDice:Core.GameObject;  
+    let one=0;
+    let two=0;
+    let three=0;
+    let four=0;
+    let five=0;
+    let six=0;
+
+
+
 
     let assetManifest = 
     [
@@ -66,6 +75,63 @@ let Game = (function(){
         stage.update();
     }
 
+    /* Utility function to check if a value falls within a range of bounds */
+    function checkRange(value:number, lowerBounds:number, upperBounds:number):number |boolean {
+        if (value >= lowerBounds && value <= upperBounds)
+        {
+            return value;
+        }
+        else
+        {
+            return !value;
+        }
+    }
+
+        /* When this function is called it determines the betLine results.
+        e.g. Bar - Orange - Banana */
+        function Reels():string[] {
+            let betLine = [" ", " "];
+            let outCome = [0, 0];
+
+            for (let spin = 0; spin < 3; spin++) {
+                outCome[spin] = Math.floor((Math.random() * 65) + 1);
+                switch (outCome[spin]) {
+                    case checkRange(outCome[spin], 1, 27):  // 41.5% probability
+                        betLine[spin] = "1";
+                        one++;
+                        break;
+                    case checkRange(outCome[spin], 28, 37): // 15.4% probability
+                        betLine[spin] = "2";
+                        two++;
+                        break;
+                    case checkRange(outCome[spin], 38, 46): // 13.8% probability
+                        betLine[spin] = "3";
+                        three++;
+                        break;
+                    case checkRange(outCome[spin], 47, 54): // 12.3% probability
+                        betLine[spin] = "4";
+                        four++;
+                        break;
+                    case checkRange(outCome[spin], 55, 59): //  7.7% probability
+                        betLine[spin] = "5";
+                        five++;
+                        break;
+                    case checkRange(outCome[spin], 60, 62): //  4.6% probability
+                        betLine[spin] = "6";
+                        six++;
+                        break;
+                   
+                }
+            }
+            return betLine;
+        }
+
+
+
+
+
+
+
     /**
      * This is the main function of the Game (where all the fun happens)
      *
@@ -74,13 +140,13 @@ let Game = (function(){
     {
         console.log(`%c Main Function`, "color: grey; font-size: 14px; font-weight: bold;");
 
-        exampleLabel = new UIObjects.Label("An Example Label", "40px", "Consolas", "#000000", Config.Game.CENTER_X, Config.Game.CENTER_Y, true);
-        stage.addChild(exampleLabel);
+       /*  exampleLabel = new UIObjects.Label("An Example Label", "40px", "Consolas", "#000000", Config.Game.CENTER_X, Config.Game.CENTER_Y, true);
+        stage.addChild(exampleLabel); */
 
         leftDice= new Core.GameObject("1",Config.Game.CENTER_X-140, Config.Game.CENTER_Y-110,true);
         stage.addChild(leftDice);
 
-        rightDice= new Core.GameObject("1",Config.Game.CENTER_X-140, Config.Game.CENTER_Y-110,true);
+        rightDice= new Core.GameObject("1",Config.Game.CENTER_X+130, Config.Game.CENTER_Y-110,true);
         stage.addChild(rightDice);
 
         rollButton = new UIObjects.Button("rollButton", Config.Game.CENTER_X, Config.Game.CENTER_Y + 100, true);
@@ -88,6 +154,11 @@ let Game = (function(){
 
         rollButton.on("click", ()=>{
             console.log("example button clicked");
+            let reels=Reels();
+
+                
+            leftDice.image=assets.getResult(reels[0]) as HTMLImageElement;
+            rightDice.image=assets.getResult(reels[1]) as HTMLImageElement;
         });
     }
 
