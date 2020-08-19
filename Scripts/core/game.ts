@@ -10,6 +10,8 @@ let Game = (function(){
     let rollButton: UIObjects.Button;  
     let leftDice:Core.GameObject;  
     let rightDice:Core.GameObject;  
+    let leftLabel:UIObjects.Label;
+    let rightLabel:UIObjects.Label;
     let one=0;
     let two=0;
     let three=0;
@@ -142,6 +144,11 @@ let Game = (function(){
 
        /*  exampleLabel = new UIObjects.Label("An Example Label", "40px", "Consolas", "#000000", Config.Game.CENTER_X, Config.Game.CENTER_Y, true);
         stage.addChild(exampleLabel); */
+        leftLabel = new UIObjects.Label(" 1", "40px", "Consolas", "#000000", Config.Game.CENTER_X-150, Config.Game.CENTER_Y+5, true);
+        stage.addChild(leftLabel);
+
+        rightLabel = new UIObjects.Label(" 2", "40px", "Consolas", "#000000", Config.Game.CENTER_X+125, Config.Game.CENTER_Y+5, true);
+        stage.addChild(rightLabel);
 
         leftDice= new Core.GameObject("1",Config.Game.CENTER_X-140, Config.Game.CENTER_Y-110,true);
         stage.addChild(leftDice);
@@ -158,7 +165,10 @@ let Game = (function(){
 
                 
             leftDice.image=assets.getResult(reels[0]) as HTMLImageElement;
+            leftLabel.text=""+reels[0]+""
+
             rightDice.image=assets.getResult(reels[1]) as HTMLImageElement;
+            rightLabel.text=""+reels[1]+""
         });
     }
 

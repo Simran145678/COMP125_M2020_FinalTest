@@ -8,6 +8,8 @@ let Game = (function () {
     let rollButton;
     let leftDice;
     let rightDice;
+    let leftLabel;
+    let rightLabel;
     let one = 0;
     let two = 0;
     let three = 0;
@@ -112,6 +114,10 @@ let Game = (function () {
         console.log(`%c Main Function`, "color: grey; font-size: 14px; font-weight: bold;");
         /*  exampleLabel = new UIObjects.Label("An Example Label", "40px", "Consolas", "#000000", Config.Game.CENTER_X, Config.Game.CENTER_Y, true);
          stage.addChild(exampleLabel); */
+        leftLabel = new UIObjects.Label(" 1", "40px", "Consolas", "#000000", Config.Game.CENTER_X - 150, Config.Game.CENTER_Y + 5, true);
+        stage.addChild(leftLabel);
+        rightLabel = new UIObjects.Label(" 2", "40px", "Consolas", "#000000", Config.Game.CENTER_X + 125, Config.Game.CENTER_Y + 5, true);
+        stage.addChild(rightLabel);
         leftDice = new Core.GameObject("1", Config.Game.CENTER_X - 140, Config.Game.CENTER_Y - 110, true);
         stage.addChild(leftDice);
         rightDice = new Core.GameObject("1", Config.Game.CENTER_X + 130, Config.Game.CENTER_Y - 110, true);
@@ -122,7 +128,9 @@ let Game = (function () {
             console.log("example button clicked");
             let reels = Reels();
             leftDice.image = assets.getResult(reels[0]);
+            leftLabel.text = "" + reels[0] + "";
             rightDice.image = assets.getResult(reels[1]);
+            rightLabel.text = "" + reels[1] + "";
         });
     }
     window.addEventListener('load', Preload);
