@@ -96,38 +96,37 @@ let Game = (function(){
         }
     }
 
-        /* When this function is called it determines the betLine results.
-        e.g. Bar - Orange - Banana */
-  
+
+        /* When this function is called it determines the rolled dice results.*/
         
-        function Reels():string[] {
+        function Rolls():string[] {
             let rollOutcomes = [" ", " "];
             let outCome = [0, 0];
 
-            for (let roll = 0; roll < 3; roll++) {
+            for (let roll = 0; roll < 2; roll++) {
                 outCome[roll] = Math.floor((Math.random() * 6) + 1);
                 switch (outCome[roll]) {
-                    case checkRange(outCome[roll], 1, 2):  // 41.5% probability
+                    case checkRange(outCome[roll], 1, 2):  
                         rollOutcomes[roll] = "1";
                         one++;
                         break;
-                    case checkRange(outCome[roll], 2, 3): // 15.4% probability
+                    case checkRange(outCome[roll], 2, 3):
                         rollOutcomes[roll] = "2";
                         two++;
                         break;
-                    case checkRange(outCome[roll], 3, 4): // 13.8% probability
+                    case checkRange(outCome[roll], 3, 4): 
                         rollOutcomes[roll] = "3";
                         three++;
                         break;
-                    case checkRange(outCome[roll], 4, 5): // 12.3% probability
+                    case checkRange(outCome[roll], 4, 5): 
                         rollOutcomes[roll] = "4";
                         four++;
                         break;
-                    case checkRange(outCome[roll], 5, 5): //  7.7% probability
+                    case checkRange(outCome[roll], 5, 5): 
                         rollOutcomes[roll] = "5";
                         five++;
                         break;
-                    case checkRange(outCome[roll], 6, 7): //  4.6% probability
+                    case checkRange(outCome[roll], 6, 7): 
                         rollOutcomes[roll] = "6";
                         six++;
                         break;
@@ -136,11 +135,6 @@ let Game = (function(){
             }
             return rollOutcomes;
         }
-
-
-
-
-
 
 
     /**
@@ -153,15 +147,20 @@ let Game = (function(){
 
        /*  exampleLabel = new UIObjects.Label("An Example Label", "40px", "Consolas", "#000000", Config.Game.CENTER_X, Config.Game.CENTER_Y, true);
         stage.addChild(exampleLabel); */
+
+        //label displaying outcome of left dice
         leftLabel = new UIObjects.Label(" 1", "40px", "Consolas", "#000000", Config.Game.CENTER_X-150, Config.Game.CENTER_Y+5, true);
         stage.addChild(leftLabel);
 
+        //label displaying outcome of right dice
         rightLabel = new UIObjects.Label(" 2", "40px", "Consolas", "#000000", Config.Game.CENTER_X+125, Config.Game.CENTER_Y+5, true);
         stage.addChild(rightLabel);
 
+          // left dice 
         leftDice= new Core.GameObject("1",Config.Game.CENTER_X-140, Config.Game.CENTER_Y-110,true);
         stage.addChild(leftDice);
 
+        //right dice
         rightDice= new Core.GameObject("1",Config.Game.CENTER_X+130, Config.Game.CENTER_Y-110,true);
         stage.addChild(rightDice);
 
@@ -170,15 +169,15 @@ let Game = (function(){
 
         rollButton.on("click", ()=>{
             console.log("example button clicked");
-            createjs.Sound.play("diceRoll");
-            let reels=Reels();
 
-                
-            leftDice.image=assets.getResult(reels[0]) as HTMLImageElement;
-            leftLabel.text=""+reels[0]+""
+            createjs.Sound.play("diceRoll");// sound effect of rolling dice
+            let rolls=Rolls();
+   
+            leftDice.image=assets.getResult(rolls[0]) as HTMLImageElement;
+            leftLabel.text=""+rolls[0]+""
 
-            rightDice.image=assets.getResult(reels[1]) as HTMLImageElement;
-            rightLabel.text=""+reels[1]+""
+            rightDice.image=assets.getResult(rolls[1]) as HTMLImageElement;
+            rightLabel.text=""+rolls[1]+""
         });
     }
 
