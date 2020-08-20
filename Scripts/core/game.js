@@ -1,4 +1,9 @@
 "use strict";
+//FinalTest
+//HARSIMRAN KAUR
+//301088749
+//8/19/2020
+//COMP125-CLIENT SIDE WEB DEVELOPMENT
 let Game = (function () {
     // variable declarations
     let canvas = document.getElementsByTagName('canvas')[0];
@@ -32,7 +37,8 @@ let Game = (function () {
         { id: "resetButton", src: "./Assets/images/resetButton.png" },
         { id: "rollButton", src: "./Assets/images/rollButton.png" },
         { id: "startButton", src: "./Assets/images/startButton.png" },
-        { id: "startOverButton", src: "./Assets/images/startOverButton.png" }
+        { id: "startOverButton", src: "./Assets/images/startOverButton.png" },
+        { id: "diceRoll", src: "./Assets/sound/diceRoll.mp3" }
     ];
     function Preload() {
         console.log(`%c Preload Function`, "color: grey; font-size: 14px; font-weight: bold;");
@@ -73,38 +79,38 @@ let Game = (function () {
     /* When this function is called it determines the betLine results.
     e.g. Bar - Orange - Banana */
     function Reels() {
-        let betLine = [" ", " "];
+        let rollOutcomes = [" ", " "];
         let outCome = [0, 0];
-        for (let spin = 0; spin < 3; spin++) {
-            outCome[spin] = Math.floor((Math.random() * 65) + 1);
-            switch (outCome[spin]) {
-                case checkRange(outCome[spin], 1, 27): // 41.5% probability
-                    betLine[spin] = "1";
+        for (let roll = 0; roll < 3; roll++) {
+            outCome[roll] = Math.floor((Math.random() * 6) + 1);
+            switch (outCome[roll]) {
+                case checkRange(outCome[roll], 1, 2): // 41.5% probability
+                    rollOutcomes[roll] = "1";
                     one++;
                     break;
-                case checkRange(outCome[spin], 28, 37): // 15.4% probability
-                    betLine[spin] = "2";
+                case checkRange(outCome[roll], 2, 3): // 15.4% probability
+                    rollOutcomes[roll] = "2";
                     two++;
                     break;
-                case checkRange(outCome[spin], 38, 46): // 13.8% probability
-                    betLine[spin] = "3";
+                case checkRange(outCome[roll], 3, 4): // 13.8% probability
+                    rollOutcomes[roll] = "3";
                     three++;
                     break;
-                case checkRange(outCome[spin], 47, 54): // 12.3% probability
-                    betLine[spin] = "4";
+                case checkRange(outCome[roll], 4, 5): // 12.3% probability
+                    rollOutcomes[roll] = "4";
                     four++;
                     break;
-                case checkRange(outCome[spin], 55, 59): //  7.7% probability
-                    betLine[spin] = "5";
+                case checkRange(outCome[roll], 5, 5): //  7.7% probability
+                    rollOutcomes[roll] = "5";
                     five++;
                     break;
-                case checkRange(outCome[spin], 60, 62): //  4.6% probability
-                    betLine[spin] = "6";
+                case checkRange(outCome[roll], 6, 7): //  4.6% probability
+                    rollOutcomes[roll] = "6";
                     six++;
                     break;
             }
         }
-        return betLine;
+        return rollOutcomes;
     }
     /**
      * This is the main function of the Game (where all the fun happens)
@@ -126,6 +132,7 @@ let Game = (function () {
         stage.addChild(rollButton);
         rollButton.on("click", () => {
             console.log("example button clicked");
+            createjs.Sound.play("diceRoll");
             let reels = Reels();
             leftDice.image = assets.getResult(reels[0]);
             leftLabel.text = "" + reels[0] + "";
